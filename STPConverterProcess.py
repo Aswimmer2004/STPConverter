@@ -12,9 +12,23 @@ class Item:
         self.sounds = {}
         self.blockDict = {}
 
+    def sifter(self, leftovers):
+        leftoversCopy = []
+        if len(leftovers) == 0:
+            return None
+        else:
+            for i in self.blockDict:
+                for j in leftovers:
+                    if (self.blockDict[i][len(self.blockDict[i]) - 1].name == j.parentBlock):
+                        self.blockDict[i].append(j)
+                    else:
+                        leftoversCopy.append(j)
+        return leftoversCopy
+
     def sortBlocks(self):
         self.listCopy = self.blocks
         self.noStart = []
+        self.noStartCopy = []
         self.blockCount = 0
 
         while len(self.listCopy) > 0:
@@ -27,13 +41,16 @@ class Item:
                     self.noStart.append(i)
                 self.listCopy.remove(i)
 
-        for i in self.blockDict:
-            for j in self.noStart:
-                if(self.blockDict[i][len(self.blockDict[i]) - 1].name == j.parentBlock):
-                    self.blockDict[i].append(j)
-
-
-
+        print(self.noStart)
+        self.noStartCopy = self.sifter(self.noStart)
+        print(self.noStartCopy)
+        """while True:
+            self.noStartCopy = []
+            self.noStartCopy = self.sifter(self.noStart)
+            self.noStart = None
+            self.noStart = self.noStartCopy
+            if(self.noStart == None):
+                break"""
 
 
 
